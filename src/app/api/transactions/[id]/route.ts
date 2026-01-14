@@ -6,9 +6,9 @@ import { logActivity } from "@/lib/activityLogger";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
@@ -35,9 +35,9 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
@@ -73,7 +73,6 @@ export async function PATCH(
 
   return NextResponse.json(updated);
 }
-
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
