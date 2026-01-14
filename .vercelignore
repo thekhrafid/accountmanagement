@@ -1,0 +1,40 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+.next
+out
+dist
+build
+
+# Environment files (use Vercel env vars instead)
+.env
+.env.local
+.env.*.local
+
+# Debug files
+debug-db.js
+check-db.js
+list-users.ts
+*.log
+
+# Backup files
+*.bak
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage
+.nyc_output
+
+# Misc
+*.tsbuildinfo

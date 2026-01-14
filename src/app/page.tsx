@@ -56,7 +56,7 @@ export default async function HomePage() {
 
       {/* HERO */}
       <section className="relative overflow-hidden pt-20 pb-32 lg:pt-32 lg:pb-40">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,var(--color-indigo-100),white)]" />
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-5xl lg:text-7xl font-black text-slate-900 mb-8 leading-tight">
             Master Your Money with <br />
