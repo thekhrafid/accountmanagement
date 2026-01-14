@@ -7,13 +7,16 @@ type Summary = {
   balance: number;
 };
 export default function TopCards() {
-  const [data, setData] = useState<Summary | null>({income:0, expense:0, balance: 0});
+  const [data, setData] = useState<Summary | null>({
+    income: 0,
+    expense: 0,
+    balance: 0,
+  });
 
   useEffect(() => {
-    fetch("/api/dashboard",{credentials:"include"})
-    .then((res)=>res.json())
-    .then(setData)
-      
+    fetch("/api/dashboard", { credentials: "include" })
+      .then((res) => res.json())
+      .then(setData);
   }, []);
 
   if (!data) return null;
@@ -37,8 +40,9 @@ function Card({
   return (
     <div className="bg-white p-6 rounded-xl shadow">
       <h3 className="text-lg font-semibold mb-2">{title}</h3>
-        <h2 className={`text-3xl font-bold ${color}`}>
-        ৳ {value.toFixed(2)}
+      <h2 className={`text-3xl font-bold break-all whitespace-normal ${color}`}>
+        {" "}
+        {value.toFixed(2)}
       </h2>
     </div>
   );

@@ -11,18 +11,45 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        if (!credentials?.email || !credentials?.password) {
+          console.log("Auth: Missing email or password");
+          return null;
+        }
+
+        const email = credentials.email.toLowerCase();
 
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          where: { email },
         });
-        if (!user) return null;
+
+        if (!user) {
+          console.log(`Auth: User not found for email: ${email}`);
+          return null;
+        }
+
+        console.log(
+          `Auth: User found: ${user.email}, verified: ${user.emailVerified}`
+        );
+
+        /* 
+        // [MARK: FIXED AUTO-LOGIN] - Check if email is verified
+        if (!user.emailVerified) {
+          console.log("Auth: Email not verified");
+          throw new Error("EMAIL_NOT_VERIFIED");
+        }
+        */
 
         const isValid = await bcrypt.compare(
           credentials.password,
           user.password
         );
-        if (!isValid) return null;
+
+        if (!isValid) {
+          console.log("Auth: Invalid password");
+          return null;
+        }
+
+        console.log("Auth: Login successful");
 
         return {
           id: user.id,

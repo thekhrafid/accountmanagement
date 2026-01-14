@@ -1,20 +1,35 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      String   @default("ACCOUNTANT")
+  id                    String   @id @default(uuid())
+  name                  String
+  email                 String   @unique
+  password              String
+  role                  String   @default("ACCOUNTANT")
+  emailVerified         Boolean @default(false)
+  verificationToken     String?
+  verificationTokenExpiry DateTime?
+  transactions          Transaction[]
+  createdAt             DateTime @default(now())
+  activityLogs          ActivityLog[]
+  verificationTokens    VerificationToken[]
+}
+
+model VerificationToken {
+  id String @id @default(uuid())
+  token String @unique
+  userId String
+  expiresAt DateTime
   createdAt DateTime @default(now())
-  transactions Transaction[]
+
+  user User @relation(fields:[userId], references:[id])
 }
 
 model Transaction {
@@ -25,4 +40,16 @@ model Transaction {
   createdAt DateTime @default(now())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model ActivityLog {
+  id        String @id @default(uuid())
+  userId    String?
+  action    String
+  entity    String
+  entityId  String?
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references:[id])
 }

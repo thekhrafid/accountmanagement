@@ -1,7 +1,10 @@
+import { logActivity } from "@/lib/activityLogger";
 import { authOptions } from "@/lib/auth-options";
 import prisma from "@/lib/prisma";
+import { Session } from "inspector/promises";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { type } from "os";
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -27,7 +30,6 @@ export async function POST(req: NextRequest) {
       userId: session.user.id,
     },
   });
-
   return NextResponse.json(transaction, { status: 201 });
 }
 
@@ -93,6 +95,14 @@ export async function DELETE(req: NextRequest) {
   await prisma.transaction.delete({
     where: { id },
   });
+  // Activity log create 
+
+await logActivity({
+  userId: session.user.id,
+  action:"DELETE",
+  entity:"TRANSACTION",
+  entityId: transaction.id,
+})
 
   return NextResponse.json({ message: "Transaction deleted" }, { status: 200 });
 }

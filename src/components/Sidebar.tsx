@@ -14,13 +14,13 @@ export default function Sidebar() {
   const menu = session.user.role === "ADMIN" ? adminMenu : userMenu;
 
   return (
-    <aside className="w-64 h-screen bg-gray-800 border-r border-slate-100 p-8 fixed top-0 left-0 z-40">
+    <aside className="w-64 h-screen bg-gray-800 border-r border-slate-100 p-4 fixed top-0 left-0 z-40">
       <div className="flex items-center gap-3 mb-10">
         <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-100">
           <div className="h-3 w-3 bg-white rounded-sm"></div>
         </div>
-        <h1 className="text-xl font-black text-gray-100 tracking-tighter italic">
-          Ledger.
+        <h1 className="text-xl font-bold text-gray-100 tracking-tighter">
+          <a href="/">Account Managemener</a>
         </h1>
       </div>
 
@@ -31,7 +31,7 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[13px] font-bold tracking-tight transition-all duration-200 ${
+              className={`flex items-center gap-4 px-4 py-3.5 rounded text-[13px] font-bold tracking-tight transition-all duration-200 ${
                 isActive
                   ? "bg-blue-50 text-blue-600 shadow-sm border border-blue-100"
                   : "text-slate-400 hover:text-slate-900 hover:bg-slate-50"
@@ -49,7 +49,7 @@ export default function Sidebar() {
       </nav>
 
       <div className="absolute bottom-8 left-8 right-8">
-        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+        <div className="p-4 w-full bg-slate-50 rounded border border-slate-100">
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
             Signed in as
           </p>
